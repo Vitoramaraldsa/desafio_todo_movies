@@ -1,17 +1,17 @@
 import 'package:flutter/widgets.dart';
 
-class Filme {
+class MovieModel {
   final int id;
-  final String nomeFilme;
+  final String nomeMovieModel;
   final String? posterPath;
   final String? popularidade;
   final String releaseDate;
   final int? voteCount;
   final String genres;
 
-  Filme({
+  MovieModel({
     required this.id,
-    required this.nomeFilme,
+    required this.nomeMovieModel,
     required this.posterPath,
     required this.popularidade,
     required this.releaseDate,
@@ -19,27 +19,27 @@ class Filme {
     required this.genres,
   });
 
-  Filme.fromJson(Map<String, dynamic> json)
+  MovieModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        nomeFilme = json['original_title'],
+        nomeMovieModel = json['original_title'],
         posterPath = json['poster_path'],
         popularidade = json['popularity'].toString(),
         releaseDate = json['release_date'],
         genres = json['genres'],
         voteCount = json['vote_count'];
 
-  Filme copyWith({
+  MovieModel copyWith({
     int? id,
-    String? nomeFilme,
+    String? nomeMovieModel,
     ValueGetter<String?>? posterPath,
     ValueGetter<String?>? popularidade,
     String? releaseDate,
     ValueGetter<int?>? voteCount,
     String? genres,
   }) {
-    return Filme(
+    return MovieModel(
       id: id ?? this.id,
-      nomeFilme: nomeFilme ?? this.nomeFilme,
+      nomeMovieModel: nomeMovieModel ?? this.nomeMovieModel,
       posterPath: posterPath != null ? posterPath() : this.posterPath,
       popularidade: popularidade != null ? popularidade() : this.popularidade,
       releaseDate: releaseDate ?? this.releaseDate,
@@ -50,6 +50,6 @@ class Filme {
 
   @override
   String toString() {
-    return 'Filme(id: $id, nomeFilme: $nomeFilme, posterPath: $posterPath, popularidade: $popularidade, releaseDate: $releaseDate, voteCount: $voteCount, genres: $genres)';
+    return 'MovieModel(id: $id, nomeMovieModel: $nomeMovieModel, posterPath: $posterPath, popularidade: $popularidade, releaseDate: $releaseDate, voteCount: $voteCount, genres: $genres)';
   }
 }
