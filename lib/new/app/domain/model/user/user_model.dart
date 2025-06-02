@@ -60,10 +60,16 @@ class UserModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source));
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, displayName: $displayName, profileImage: $profileImage, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(id: $id,'
+        ' name: $name,'
+        ' displayName: $displayName,'
+        ' profileImage: $profileImage,'
+        ' createdAt: $createdAt,'
+        ' updatedAt: $updatedAt)';
   }
 }

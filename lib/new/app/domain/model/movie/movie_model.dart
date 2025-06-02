@@ -1,17 +1,17 @@
-import 'package:flutter/widgets.dart';
+import 'dart:convert';
 
 class MovieModel {
   final int id;
-  final String nomeMovieModel;
+  final String originalTitle;
   final String? posterPath;
   final String? popularidade;
-  final String releaseDate;
+  final DateTime releaseDate;
   final int? voteCount;
   final String genres;
 
   MovieModel({
     required this.id,
-    required this.nomeMovieModel,
+    required this.originalTitle,
     required this.posterPath,
     required this.popularidade,
     required this.releaseDate,
@@ -19,37 +19,71 @@ class MovieModel {
     required this.genres,
   });
 
-  MovieModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        nomeMovieModel = json['original_title'],
-        posterPath = json['poster_path'],
-        popularidade = json['popularity'].toString(),
-        releaseDate = json['release_date'],
-        genres = json['genres'],
-        voteCount = json['vote_count'];
-
   MovieModel copyWith({
     int? id,
-    String? nomeMovieModel,
-    ValueGetter<String?>? posterPath,
-    ValueGetter<String?>? popularidade,
-    String? releaseDate,
-    ValueGetter<int?>? voteCount,
+    String? originalTitle,
+    String? posterPath,
+    String? popularidade,
+    DateTime? releaseDate,
+    int? voteCount,
     String? genres,
   }) {
     return MovieModel(
       id: id ?? this.id,
-      nomeMovieModel: nomeMovieModel ?? this.nomeMovieModel,
-      posterPath: posterPath != null ? posterPath() : this.posterPath,
-      popularidade: popularidade != null ? popularidade() : this.popularidade,
+      originalTitle: originalTitle ?? this.originalTitle,
+      posterPath: posterPath ?? this.posterPath,
+      popularidade: popularidade ?? this.popularidade,
       releaseDate: releaseDate ?? this.releaseDate,
-      voteCount: voteCount != null ? voteCount() : this.voteCount,
+      voteCount: voteCount ?? this.voteCount,
       genres: genres ?? this.genres,
     );
   }
 
+  Map<String, dynamic> toMap() {
+    final map = <String, dynamic>{};
+
+    map['id'] = id;
+    map['originalTitle'] = originalTitle;
+    if (posterPath != null) {
+      map['posterPath'] = posterPath;
+    }
+    if (popularidade != null) {
+      map['popularidade'] = popularidade;
+    }
+    map['releaseDate'] = releaseDate.millisecondsSinceEpoch;
+    if (voteCount != null) {
+      map['voteCount'] = voteCount;
+    }
+    map['genres'] = genres;
+
+    return map;
+  }
+
+  factory MovieModel.fromMap(Map<String, dynamic> map) {
+    return MovieModel(
+      id: map['id']?.toInt() ?? 0,
+      originalTitle: map['originalTitle'] ?? '',
+      posterPath: map['posterPath'],
+      popularidade: map['popularidade'],
+      releaseDate: DateTime.fromMillisecondsSinceEpoch(map['releaseDate']),
+      voteCount: map['voteCount']?.toInt(),
+      genres: map['genres'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory MovieModel.fromJson(String source) =>
+      MovieModel.fromMap(json.decode(source));
+
   @override
   String toString() {
-    return 'MovieModel(id: $id, nomeMovieModel: $nomeMovieModel, posterPath: $posterPath, popularidade: $popularidade, releaseDate: $releaseDate, voteCount: $voteCount, genres: $genres)';
+    return 'MovieModel(id: $id,'
+        ' originalTitle: $originalTitle,'
+        ' posterPath: $posterPath,'
+        ' popularidade: $popularidade,'
+        ' releaseDate: $releaseDate,'
+        ' voteCount: $voteCount,'
+        ' genres: $genres)';
   }
 }
